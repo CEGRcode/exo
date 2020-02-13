@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 with open('README.md') as readme_file:
     readme = readme_file.read()
 
-requirements = ['Click>=7.0', 'matplotlib', 'numpy', 'pyfiglet']
+requirements = ['Click>=7.0', 'matplotlib', 'numpy', 'pyfiglet', 'pandas']
 
 setup(
     author="Prashant Kumar Kuntala",
@@ -27,6 +27,13 @@ setup(
         'console_scripts': [
             'exo=exo.cli:main',
             'calculate-contrast=exo.calculate_contrast_threshold:cli',
+            'fourcolor=exo.create_fourcolor_plot:cli',
+            'bedtoucsc=exo.format_peaks:cli',
+            'totaltag-order=exo.total_tag_ordering:cli',
+            'remove-overlapping-motifs=exo.remove_overlapping_motifs:cli',
+            'process-bedgraph=exo.process_genome_coverage:cli',
+            'make-composite=exo.make_composite:cli',
+            'motif-composite=exo.make_motif_composite:cli'
         ],
     },
     install_requires=requirements,

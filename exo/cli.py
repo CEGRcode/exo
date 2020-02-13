@@ -18,8 +18,13 @@ def main(version):
 
     \b
         calculate-threshold : calculates & reports a contrast threshold from tagPileUP CDT for generating heatmaps.
-        make-heatmap        : generates a heatmap from a tagPileUP CDT tabular file.
-        make-composite      : generates a composite from a tagPileUP CDT tabular file.
+        make-composite      : generates a composite from sample and control tagPileUP CDT tabular files.
+        motif-composite     : generates a composite from strand separated tagPileUP CDT tabular file.
+        fourcolor           : generates a fourcolor plot from Fasta file.
+        bedtoucsc           : converts sacCer3_cegr bedfiles to UCSC specifications.
+        totaltag-order      : sorts the tagPileUP CDT in descending order of (row-wise) totaltags.
+        remove-overlapping-motifs : scans and removes motifs overlapping within an exclusion window.
+        process-bedgraph    : converts genomeCovergeBed output to standard ucsc bedGraph.
 
     For help with each utility, use -help (ex: make-heatmap -help)
     """
