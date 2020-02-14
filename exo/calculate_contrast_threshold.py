@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
 """Console script for exo."""
-import sys
-import os
 import errno
 import math
+import sys
 
 import click
 
 import numpy as np
 
 # Adapted Java treeview image compression algorithm
+
+
 def rebin(a, new_shape):
     M, N = a.shape
     m, n = new_shape
@@ -122,11 +123,11 @@ def calculate_threshold(input_file, threshold_type, threshold_value, header, sta
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(options_metavar='<options>', context_settings=CONTEXT_SETTINGS)
 @click.argument('tagpileup-cdt', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
-@click.option('-hh', '--has-header', metavar="<string>", type=click.BOOL, default='T', prompt=True, show_default='True', help='Does CDT contain headers ?')
+@click.option('-hh', '--has-header', metavar="<string>", type=click.BOOL, default='T', prompt=True, show_default='True', help='has headers ?')
 @click.option('-ct', '--threshold-type', type=click.Choice(['quantile', 'absolute'], case_sensitive=False), prompt=True, default='quantile')
 @click.option('-cv', '--threshold-value', metavar="<float>", default=90.0, prompt=True, show_default="quantile:90.0", help="Takes values >=0")
-@click.option('-m', '--min-upper-limit',  metavar="<float>", default=5.0, prompt=True, show_default='5.0', help='Minimum upper limit')
-@click.option('-s', '--start_col',  metavar="<int>", default=2, prompt=True, show_default='2', help='Start column')
+@click.option('-m', '--min-upper-limit', metavar="<float>", default=5.0, prompt=True, show_default='5.0', help='Minimum upper limit')
+@click.option('-s', '--start_col', metavar="<int>", default=2, prompt=True, show_default='2', help='Start column')
 @click.option('-r', '--row_num', metavar="<int>", default=700, prompt=True, show_default='700', help='Height of the plot')
 @click.option('-c', '--col_num', metavar="<int>", default=300, prompt=True, show_default='300', help='Width of the plot')
 def cli(min_upper_limit, tagpileup_cdt, has_header, start_col, row_num, col_num, threshold_type, threshold_value):
