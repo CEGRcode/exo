@@ -1,18 +1,17 @@
 #!/usr/bin/python
 from __future__ import division
 
-import argparse
 import math
 import sys
+
+import click
 
 import matplotlib
 import matplotlib.pyplot as plt
 
-import pandas as pd
-
 import numpy
 
-import click
+import pandas as pd
 
 matplotlib.use('Agg')
 
@@ -31,19 +30,19 @@ def findRelativeMaxPoint(data):
 
     return [zero_relative, maxi]
 
+
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(options_metavar='<options>', context_settings=CONTEXT_SETTINGS)
 @click.argument('sample', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
 @click.argument('control', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
-@click.option('-t', '--title',  metavar="<string>", default=' ', prompt=True, show_default=' ', help='Plot Title')
-@click.option('-sc', '--scolor',  metavar="<string>", default='C70039', prompt=True, show_default='C70039', help='Sample data color in Hexcode')
-@click.option('-cc', '--ccolor',  metavar="<string>", default='dc7633', prompt=True, show_default='dc7633', help=' Control data color in Hexcode')
-@click.option('-bc', '--bcolor',  metavar="<string>", default='212f3d', prompt=True, show_default='212f3d', help='Background color in Hexcode')
-@click.option('-lc', '--lcolor',  metavar="<string>", default='28de0f', prompt=True, show_default='28de0f', help='Center line color in Hexcode')
+@click.option('-t', '--title', metavar="<string>", default=' ', prompt=True, show_default=' ', help='Plot Title')
+@click.option('-sc', '--scolor', metavar="<string>", default='C70039', prompt=True, show_default='C70039', help='Sample data color in Hexcode')
+@click.option('-cc', '--ccolor', metavar="<string>", default='dc7633', prompt=True, show_default='dc7633', help=' Control data color in Hexcode')
+@click.option('-bc', '--bcolor', metavar="<string>", default='212f3d', prompt=True, show_default='212f3d', help='Background color in Hexcode')
+@click.option('-lc', '--lcolor', metavar="<string>", default='28de0f', prompt=True, show_default='28de0f', help='Center line color in Hexcode')
 @click.option('-d', '--dpi', metavar="<int>", type=int, default=100, prompt=True, show_default='100', help='Plot pixel density')
-@click.option('-ym', '--ymax', metavar="<int>", type=int,default=10, prompt=True, show_default='10', help='Min-Max value to set the Y-axis upper limit')
-@click.option('-o', '--out',  metavar="<string>", default='Composite_plot.png', prompt=True, show_default='Composite_plot.png', help='output filename')
-
+@click.option('-ym', '--ymax', metavar="<int>", type=int, default=10, prompt=True, show_default='10', help='Min-Max value to set the Y-axis upper limit')
+@click.option('-o', '--out', metavar="<string>", default='Composite_plot.png', prompt=True, show_default='Composite_plot.png', help='output filename')
 def cli(sample, control, title, scolor, ccolor, bcolor, lcolor, dpi, ymax, out):
     """
     Program to create the composite plots from signal and control tag pile up CDT data matrix.
@@ -61,7 +60,6 @@ def cli(sample, control, title, scolor, ccolor, bcolor, lcolor, dpi, ymax, out):
         controlData = pd.read_csv(control, sep='\t', index_col=0)
     except IOError:
         print("\nUnable to OPEN input files !\n")
-        parser.print_help()
         sys.exit(1)
 
     print("signalData shape : {}".format(signalData.shape))
@@ -84,7 +82,6 @@ def cli(sample, control, title, scolor, ccolor, bcolor, lcolor, dpi, ymax, out):
     sy = list(signalData.columns)
     sy = list(map(float, sy))
 
-
     # retrieve the row index from the controlData dataframe
     rowIndex = list(controlData.index)
 
@@ -94,7 +91,6 @@ def cli(sample, control, title, scolor, ccolor, bcolor, lcolor, dpi, ymax, out):
     # retrieve values for y axis and convert them to float
     cy = list(controlData.columns)
     cy = list(map(float, cy))
-
 
     # setting the font
     # matplotlib.rcParams['font.family'] = "Arial"

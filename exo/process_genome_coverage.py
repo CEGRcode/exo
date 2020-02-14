@@ -15,13 +15,12 @@ genomeCoverage : https://bedtools.readthedocs.io/en/latest/content/tools/genomec
 To create the bedgraph style output, you can do stand specific, fragment size and stuff
 
 """
-
-import argparse
 from collections import OrderedDict
+
+import click
 
 import pandas as pd
 
-import click
 
 def write_roman(num):
 
@@ -57,7 +56,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(options_metavar='<options>', context_settings=CONTEXT_SETTINGS)
 @click.argument('bedfile', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
 @click.option('-s', '--strand', metavar="<string>", type=click.Choice(['+', '-'], case_sensitive=False), prompt=True, default='+')
-@click.option('-o', '--out',  metavar="<string>", default='processed.bedGraph', prompt=True, show_default='processed.bedGraph', help='output filename')
+@click.option('-o', '--out', metavar="<string>", default='processed.bedGraph', prompt=True, show_default='processed.bedGraph', help='output filename')
 def cli(bedfile, strand, out):
     """
     Takes a bedtools genomeCoverageBed output file generated using (-bga) & (strand) options.

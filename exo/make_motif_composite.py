@@ -1,29 +1,29 @@
 #!/usr/bin/python
 from __future__ import division
 
-import argparse
+
 import math
 import sys
+
+import click
 
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.ticker import NullFormatter
 
-import pandas as pd
-
 import numpy
+
+import pandas as pd
 
 matplotlib.use('Agg')
 
-import click
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(options_metavar='<options>', context_settings=CONTEXT_SETTINGS)
 @click.argument('sample', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
-@click.option('-t', '--title',  metavar="<string>", default=' ', prompt=True, show_default=' ', help='Plot Title')
+@click.option('-t', '--title', metavar="<string>", default=' ', prompt=True, show_default=' ', help='Plot Title')
 @click.option('-d', '--dpi', metavar="<int>", type=int, default=100, prompt=True, show_default='100', help='Plot pixel density')
-@click.option('-o', '--out',  metavar="<string>", default='motifcomposite_sense_antisense.png', prompt=True, show_default='motifcomposite_sense_antisense.png', help='output filename')
-
+@click.option('-o', '--out', metavar="<string>", default='motifcomposite_sense_antisense.png', prompt=True, show_default='motifcomposite_sense_antisense.png', help='output filename')
 def cli(sample, title, dpi, out):
     """
     Accepts a strand separate tagPileUP CDT (tabular) file to create a composite plot.
@@ -40,13 +40,7 @@ def cli(sample, title, dpi, out):
         signalData = pd.read_csv(sample, sep='\t', index_col=0)
     except IOError:
         print("\nUnable to OPEN input files !\n")
-        parser.print_help()
-        sys.exit()
-
-
-    # Calculating the region to plot [-500 to 500]
-    start_col = 2000 - 500
-    stop_col = 2000 + 500
+        sys.exit(1)
 
     # prepare PlotData, remove extra decimal values
     signalData = signalData.round(decimals=3)
@@ -109,7 +103,8 @@ def cli(sample, title, dpi, out):
         # setting the ylim for the y-axis
         ax.set_ylim(my_yticks[0], math.ceil(my_yticks[lastTick]))
         # setting the ticks for y-axis
-        plt.yticks([my_yticks[0], 0, math.ceil(my_yticks[lastTick])], fontsize=14)
+        plt.yticks([my_yticks[0], 0, math.ceil(
+            my_yticks[lastTick])], fontsize=14)
 
     plt.ylabel('Tags', fontsize=18)
 
@@ -149,5 +144,5 @@ def cli(sample, title, dpi, out):
     plt.margins(0.01)
 
     # saving the image at 300dpi , web standard for printing images.
-    plt.savefig(out,facecolor=None, dpi=dpi, pad_inches=0)
+    plt.savefig(out, facecolor=None, dpi=dpi, pad_inches=0)
     click.echo('\n' + '.' * 50)

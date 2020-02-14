@@ -1,9 +1,7 @@
 #!/usr/bin/python
-import argparse
+import click
 
 import pandas as pd
-
-import click
 
 
 def sortData(sense, out):
@@ -40,7 +38,7 @@ def sortData(sense, out):
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(options_metavar='<options>', context_settings=CONTEXT_SETTINGS)
 @click.argument('tagpileup-cdt', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
-@click.option('-o', '--out',  metavar="<string>", default='totalTagSorted.tabular', prompt=True, show_default='totalTagSorted.tabular', help='output filename')
+@click.option('-o', '--out', metavar="<string>", default='totalTagSorted.tabular', prompt=True, show_default='totalTagSorted.tabular', help='output filename')
 def cli(tagpileup_cdt, out):
     """
     Sorts the tagpileup heatmap frequency matrix based on totalTagCount.

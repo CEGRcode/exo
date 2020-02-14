@@ -1,12 +1,11 @@
 #!/usr/bin/python
 from __future__ import division
 
-import argparse
 from collections import OrderedDict
 
-import pandas as pd
-
 import click
+
+import pandas as pd
 
 
 def write_roman(num):
@@ -42,9 +41,8 @@ def write_roman(num):
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(options_metavar='<options>', context_settings=CONTEXT_SETTINGS)
 @click.argument('bedfile', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
-@click.option('-ew', '--expand-window',  metavar="<int>", type=int, default='0', prompt=True, show_default='0', help='Expand Peak Region')
-@click.option('-o', '--out',  metavar="<string>", default='formated.bed', prompt=True, show_default='formated.bed', help='output filename')
-
+@click.option('-ew', '--expand-window', metavar="<int>", type=int, default='0', prompt=True, show_default='0', help='Expand Peak Region')
+@click.option('-o', '--out', metavar="<string>", default='formated.bed', prompt=True, show_default='formated.bed', help='output filename')
 def cli(bedfile, expand_window, out):
     """
     Converts chromosome numbers in bedfile to UCSC specifications.

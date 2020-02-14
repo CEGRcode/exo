@@ -1,6 +1,7 @@
 #!/usr/bin/python
-import argparse
 import sys
+
+import click
 
 import matplotlib
 import matplotlib.colors as mcolors
@@ -9,8 +10,6 @@ from matplotlib.ticker import MultipleLocator
 
 import numpy as np
 matplotlib.use('Agg')
-
-import click
 
 
 def plotFourColor(plotData, hasN, height, width, dpi, outputName, xLabel, plotTitle, sites):
@@ -80,21 +79,21 @@ def plotFourColor(plotData, hasN, height, width, dpi, outputName, xLabel, plotTi
     # to increase the width of the plot borders
     plt.setp(ax.spines.values(), linewidth=2)
 
-    plt.savefig(outputName, bbox_inches='tight', pad_inches=0, dpi=dpi, facecolor=None)
+    plt.savefig(outputName, bbox_inches='tight',
+                pad_inches=0, dpi=dpi, facecolor=None)
     return 0
 
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(options_metavar='<options>', context_settings=CONTEXT_SETTINGS)
 @click.argument('fasta', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
-@click.option('-pt', '--title',  metavar="<string>", default=' ', prompt=True, show_default=' ', help='Plot title')
-@click.option('-xl', '--xlabel',  metavar="<string>", default=' ', prompt=True, show_default=' ', help='Label under X-axis')
+@click.option('-pt', '--title', metavar="<string>", default=' ', prompt=True, show_default=' ', help='Plot title')
+@click.option('-xl', '--xlabel', metavar="<string>", default=' ', prompt=True, show_default=' ', help='Label under X-axis')
 @click.option('-ph', '--height', metavar="<int>", type=int, default=700, prompt=True, show_default='True', help='Plot Height')
 @click.option('-pw', '--width', metavar="<int>", type=int, default=300, prompt=True, show_default='True', help='Plot Width')
 @click.option('-hn', '--hasn', metavar="<string>", type=click.BOOL, default='False', prompt=True, show_default='False', help='Does fasta contain "N" ? ')
 @click.option('-d', '--dpi', metavar="<int>", type=int, default=100, prompt=True, show_default='100', help='Plot pixel density')
-@click.option('-o', '--out',  metavar="<string>", default='fourcolor.png', prompt=True, show_default='fourcolor.png', help='output filename')
-
+@click.option('-o', '--out', metavar="<string>", default='fourcolor.png', prompt=True, show_default='fourcolor.png', help='output filename')
 def cli(fasta, height, width, title, xlabel, hasn, dpi, out):
     """
     Creates a fourcolor plot from the input fasta sequences.
@@ -158,5 +157,6 @@ def cli(fasta, height, width, title, xlabel, hasn, dpi, out):
     print("plotData : \n{}".format(plotData))
 
     # creating the four Color with proper dimensions
-    plotFourColor(plotData, hasn, height, width, dpi, out, xlabel, title, len(sequences))
+    plotFourColor(plotData, hasN, height, width, dpi,
+                  out, xlabel, title, len(sequences))
     click.echo('\n' + '.' * 50)

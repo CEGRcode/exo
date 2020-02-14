@@ -1,12 +1,10 @@
 #!/usr/bin/python
 from __future__ import division
 
-import argparse
+import click
 
 import pandas as pd
-
 # import pprint
-import click
 
 
 def removeRepeats(dataFrame):
@@ -134,9 +132,8 @@ def removeRegions(dataFrame, er, out):
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(options_metavar='<options>', context_settings=CONTEXT_SETTINGS)
 @click.argument('bedfile', type=click.Path(exists=True, resolve_path=True, file_okay=True, dir_okay=False,))
-@click.option('-ew', '--exclude-window',  metavar="<int>", type=int, default='100', prompt=True, show_default='100', help='Exclusion window for motif p-value comparison')
-@click.option('-o', '--out',  metavar="<string>", default='dedupRegions.bed', prompt=True, show_default='dedupRegions.bed', help='output filename')
-
+@click.option('-ew', '--exclude-window', metavar="<int>", type=int, default='100', prompt=True, show_default='100', help='Exclusion window for motif p-value comparison')
+@click.option('-o', '--out', metavar="<string>", default='dedupRegions.bed', prompt=True, show_default='dedupRegions.bed', help='output filename')
 def cli(bedfile, exclude_window, out):
     """
     For each motif region in the bedfile, scans for overlapping motifs with an exclusion window (in bp) centered at the region midpoint. Between two motifs, retains the motif with lowest p-value and discards the other.
